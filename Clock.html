@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        .ClockElemet{
+            width: 40px ;
+            height: 80px ;
+            display:inline-block;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url(0.gif);;
+        }
+        .NumberDivider{
+            width: 40px ;
+            height: 80px ;
+            background-image: url(points.gif);
+            display:inline-block;
+            background-size: contain;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="ClockElemet" id="Hour2"></div>
+        <div class="ClockElemet" id="Hour1"></div>
+
+        <div class="NumberDivider"></div>
+
+        <div class="ClockElemet" id="Minute2" ></div>
+        <div class="ClockElemet" id="Minute1"></div>
+
+        <div class="NumberDivider"></div>
+
+        <div class="ClockElemet" id="Second2"></div>
+        <div class="ClockElemet" id="Second1"></div>
+        
+        <script>
+            let Seconds;
+            let Minuts;
+            let Hour;
+
+            let Now = new Date(Date.now());
+
+            Hour = Now.getHours();
+            Seconds = Now.getSeconds();
+            Minuts = Now.getMinutes();
+            let timer = setInterval(TimerUpdate,1000);
+            function TimerUpdate(){
+                
+               //debugger;
+                Seconds++;
+
+                if(Seconds >= 60){
+                    Seconds = 0;
+
+                    if(Minuts>60){
+                        
+                        Minuts = 0;
+                        Hour++;
+                    }
+                    else Minuts++;
+
+                    if(Hour <= 24) Hour++;
+                    else Hour = 0;
+                }
+
+                //Secons image updating
+                if(Seconds < 10){
+                    document.getElementById("Second1").style.backgroundImage = `url(${Seconds}.gif)`;
+                    document.getElementById("Second2").style.backgroundImage = `url(0.gif)`;
+                    
+                }
+                if(Seconds > 10){
+                    SecondSecond = ( (Seconds-(Seconds%10))/10 );
+                    document.getElementById("Second2").style.backgroundImage = `url(${SecondSecond}.gif)`;
+                    document.getElementById("Second1").style.backgroundImage = `url(${Seconds%10}.gif)`;
+                }
+                console.log(Hour);
+
+                //Minuts image updating
+                if(Minuts < 10){
+                    document.getElementById("Minute1").style.backgroundImage = `url(${Minuts}.gif)`;
+                    document.getElementById("Minute2").style.backgroundImage = `url(0.gif)`;
+                }
+                if(Minuts > 10){
+                    MinuteMinute = ( (Minuts-(Minuts%10))/10 );
+                    document.getElementById("Minute2").style.backgroundImage = `url(${MinuteMinute}.gif)`;
+                    document.getElementById("Minute1").style.backgroundImage = `url(${Minuts%10}.gif)`;
+                }
+
+                //Hour image updating
+                if(Hour < 10){
+                    document.getElementById("Hour1").style.backgroundImage = `url(${Hour}.gif)`;
+                    document.getElementById("Hour2").style.backgroundImage = `url(0.gif)`;
+                }
+                if(Hour > 10){
+                    HourHour = ( (Hour-(Hour%10))/10 );
+                    document.getElementById("Hour2").style.backgroundImage = `url(${HourHour}.gif)`;
+                    document.getElementById("Hour1").style.backgroundImage = `url(${Hour%10}.gif)`;
+                }
+
+            }
+
+        </script>
+
+    </div>
+</body>
+</html>
